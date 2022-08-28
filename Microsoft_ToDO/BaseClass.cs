@@ -22,33 +22,34 @@ namespace Microsoft_ToDO
 
             driver = new EdgeDriver();
             driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
 
         }
         public void Login()
         {
-            driver.Navigate().GoToUrl(Base_url);
-
+            driver.Navigate().GoToUrl(Base_url); //navigating to url
             driver.FindElement(By.XPath("//a[@id='actionButton']")).Click(); //get started
+            this.ExIWait("//div[@id='otherTile']"); //waiting for account picker
             driver.FindElement(By.XPath("//div[@id='otherTile']")).Click(); //Skipping V-id
             driver.FindElement(By.XPath("//input[@type='email']")).SendKeys(user_name); //entering user name
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             driver.FindElement(By.XPath("//input[@name='passwd']")).SendKeys(Pass); //entering passwrod
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
+            this.ExIWait("//h2[@class='listTitle']//*[text() = 'My Day']"); //waiting for title
+            IWebElement MyDay = driver.FindElement(By.XPath("//h2[@class='listTitle']//*[text() = 'My Day']"));
+            Assert.AreEqual(true, MyDay.Displayed);
+            Console.WriteLine("Login Successful!");
         }
-        public void ExWait(String Xpath)
+        
+        public void ExIWait(String Xpath)
         {
-        Func<IWebDriver, bool> waitForElement = new Func<IWebDriver, bool>((IWebDriver Web) =>
-        {
-            Console.WriteLine(Web.FindElement(By.XPath(Xpath)).GetAttribute("innerHTML"));
-            return true;
-        });
-        wait.Until(waitForElement);
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait.Until(c => c.FindElement(By.XPath(Xpath)));
         }
     }
 }

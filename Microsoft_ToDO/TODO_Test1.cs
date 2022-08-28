@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.ObjectModel;
 
 namespace Microsoft_ToDO
 {
@@ -17,40 +18,19 @@ namespace Microsoft_ToDO
         public void Setup()
         {
             base.BrowserLaunch();
-            
         }
 
         [TestMethod]
         public void loginTest1()
         {
             base.Login();
-
-            Func<IWebDriver, bool> waitForElement = new Func<IWebDriver, bool>((IWebDriver Web) =>
-            {
-                Console.WriteLine(Web.FindElement(By.XPath("//h2[@class='listTitle']//*[text() = 'My Day']")).GetAttribute("innerHTML"));
-                return true;
-            });
-            wait.Until(waitForElement);
-
-            IWebElement MyDay = driver.FindElement(By.XPath("//h2[@class='listTitle']//*[text() = 'My Day']"));
-            Assert.AreEqual(true, MyDay.Displayed);
-            Console.WriteLine("My DAY Displayed!");
-
         }
         [TestMethod]
         public void HmenuCollaps()
         {
             base.Login();
-            
 
-            base.ExWait("//h2[@class='listTitle']//*[text() = 'My Day']"); //waiting for title
-            IWebElement MyDay = driver.FindElement(By.XPath("//h2[@class='listTitle']//*[text() = 'My Day']"));
-            Assert.AreEqual(true, MyDay.Displayed); //validating login
-
-            Console.WriteLine("My DAY Displayed!");
-            Console.WriteLine("login successfull!");
-
-            driver.FindElement(By.XPath("//button[@class='menu']")).Click(); //closing on hamburger menu
+            driver.FindElement(By.XPath("//button[@class='menu']")).Click(); //closing hamburger menu
             Console.WriteLine("Clicked on Hamburger menu");
             try
             {
@@ -61,7 +41,7 @@ namespace Microsoft_ToDO
                 Console.WriteLine("Side Menu Closed");
             }
 
-            driver.FindElement(By.XPath("//button[@class='menu']")).Click(); //opening on hamburger menu
+            driver.FindElement(By.XPath("//button[@class='menu']")).Click(); //opening hamburger menu again
             Console.WriteLine("Clicked on Hamburger menu");
             try
             {
@@ -76,7 +56,29 @@ namespace Microsoft_ToDO
             }
         }
 
-            [TestCleanup]
+        [TestMethod]
+        public void AddTask()
+        {
+            base.Login();
+            driver.FindElement(By.XPath("//input[@id='baseAddInput-addTask-today']")).SendKeys("Test1");
+            driver.FindElement(By.XPath("//button[contains(text(),'Add')]")).Click();
+        }
+        [TestMethod]
+        public void NavEachTab()
+        {
+            base.Login();
+            IWebElement Navbar = driver.FindElement(By.XPath("//ul[@role='listbox']"));
+            IReadOnlyList<IWebElement> AllTabs = Navbar.FindElements(By.TagName("li"));
+            Assert.AreEqual(5, AllTabs.Count);
+            foreach (IWebElement tab in AllTabs)
+            {
+                tab.Click();
+                Thread.Sleep(3000);
+            }
+            
+        }
+
+        [TestCleanup]
         public void Teardown()
         {
             driver.Quit();
