@@ -19,13 +19,13 @@ namespace Microsoft_ToDO
         public WebDriverWait wait;
         public void BrowserLaunch()
         {
-            
+
             driver = new EdgeDriver();
             driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-         
+
 
         }
         public void Login()
@@ -40,6 +40,15 @@ namespace Microsoft_ToDO
             driver.FindElement(By.XPath("//input[@name='passwd']")).SendKeys(Pass); //entering passwrod
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
+        }
+        public void ExWait(String Xpath)
+        {
+        Func<IWebDriver, bool> waitForElement = new Func<IWebDriver, bool>((IWebDriver Web) =>
+        {
+            Console.WriteLine(Web.FindElement(By.XPath(Xpath)).GetAttribute("innerHTML"));
+            return true;
+        });
+        wait.Until(waitForElement);
         }
     }
 }
