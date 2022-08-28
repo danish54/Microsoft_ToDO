@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft_ToDO
 {
@@ -15,17 +16,21 @@ namespace Microsoft_ToDO
     {
 
         [TestInitialize]
+        
         public void Setup()
         {
             base.BrowserLaunch();
         }
 
         [TestMethod]
+        [Priority(1)]
         public void loginTest1()
         {
             base.Login();
         }
+
         [TestMethod]
+        [Priority(2)]
         public void HmenuCollaps()
         {
             base.Login();
@@ -42,6 +47,7 @@ namespace Microsoft_ToDO
             }
 
             driver.FindElement(By.XPath("//button[@class='menu']")).Click(); //opening hamburger menu again
+            Thread.Sleep(2000);
             Console.WriteLine("Clicked on Hamburger menu");
             try
             {
@@ -57,13 +63,16 @@ namespace Microsoft_ToDO
         }
 
         [TestMethod]
+        [Priority(3)]
         public void AddTask()
         {
             base.Login();
             driver.FindElement(By.XPath("//input[@id='baseAddInput-addTask-today']")).SendKeys("Test1");
             driver.FindElement(By.XPath("//button[contains(text(),'Add')]")).Click();
         }
+
         [TestMethod]
+        [Priority(4)]
         public void NavEachTab()
         {
             base.Login();
