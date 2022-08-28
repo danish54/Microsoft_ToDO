@@ -6,24 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.Events;
+using OpenQA.Selenium.Support.UI;
 
 namespace Microsoft_ToDO
 {
-    internal class BaseClass
+    public class BaseClass
     {
-        IWebDriver driver;
+        public IWebDriver driver;
         String Base_url = "https://to-do.microsoft.com";
         String user_name = "smbtest89@gmail.com";
         String Pass = "08Apples";
-
+        public WebDriverWait wait;
         public void BrowserLaunch()
         {
             
             driver = new EdgeDriver();
             driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-            
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+         
+
         }
         public void Login()
         {
@@ -36,9 +39,7 @@ namespace Microsoft_ToDO
             Thread.Sleep(2000);
             driver.FindElement(By.XPath("//input[@name='passwd']")).SendKeys(Pass); //entering passwrod
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
-            Thread.Sleep(2000);
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
-            Thread.Sleep(5000);
         }
     }
 }
