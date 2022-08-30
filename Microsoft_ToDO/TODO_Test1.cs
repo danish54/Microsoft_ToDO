@@ -22,15 +22,13 @@ namespace Microsoft_ToDO
             base.BrowserLaunch();
         }
 
-        [TestMethod]
-        [Priority(1)]
+        [TestMethod,Priority(1)]
         public void loginTest1()
         {
             base.Login();
         }
 
-        [TestMethod]
-        [Priority(2)]
+        [TestMethod, Priority(2)]
         public void HmenuCollaps()
         {
             base.Login();
@@ -62,8 +60,7 @@ namespace Microsoft_ToDO
             }
         }
 
-        [TestMethod]
-        [Priority(3)]
+        [TestMethod, Priority(3)]
         public void AddTask()
         {
             base.Login();
@@ -71,8 +68,7 @@ namespace Microsoft_ToDO
             driver.FindElement(By.XPath("//button[contains(text(),'Add')]")).Click();
         }
 
-        [TestMethod]
-        [Priority(4)]
+        [TestMethod, Priority(4)]
         public void NavEachTab()
         {
             base.Login();

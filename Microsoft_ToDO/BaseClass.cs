@@ -17,14 +17,17 @@ namespace Microsoft_ToDO
         String user_name = "smbtest89@gmail.com";
         String Pass = "08Apples";
         public WebDriverWait wait;
+        public EdgeOptions options;
         public void BrowserLaunch()
         {
-
-            driver = new EdgeDriver();
+            options = new EdgeOptions();
+            options.AddArgument("disable-notifications");
+            options.AddArgument("disable-sync");
+            driver = new EdgeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            
 
 
         }
@@ -45,10 +48,11 @@ namespace Microsoft_ToDO
             Assert.AreEqual(true, MyDay.Displayed);
             Console.WriteLine("Login Successful!");
         }
+
         
         public void ExIWait(String Xpath)
         {
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             wait.Until(c => c.FindElement(By.XPath(Xpath)));
         }
     }
