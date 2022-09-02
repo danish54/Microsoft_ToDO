@@ -14,8 +14,8 @@ namespace Microsoft_ToDO.Helper
     {
         public IWebDriver driver;
         string Base_url = "https://to-do.microsoft.com";
-        string user_name = "smbtest89@gmail.com";
-        string Pass = "08Apples";
+        public string user_name = "smbtest89@gmail.com";
+        public string Pass = "08Apples";
         public WebDriverWait wait;
         public EdgeOptions options;
         public void BrowserLaunch()
@@ -29,23 +29,24 @@ namespace Microsoft_ToDO.Helper
             driver.Manage().Cookies.DeleteAllCookies();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            driver.Navigate().GoToUrl(Base_url); //navigating to url
 
 
 
         }
         public void Login()
         {
-            driver.Navigate().GoToUrl(Base_url); //navigating to url
+            
             driver.FindElement(By.XPath("//a[@id='actionButton']")).Click(); //get started
 
             /* this.ExIWait("//div[@id='otherTile']"); //waiting for account picker
             driver.FindElement(By.XPath("//div[@id='otherTile']")).Click(); //Skipping V-id */
 
             driver.FindElement(By.XPath("//input[@type='email']")).SendKeys(user_name); //entering user name
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next---
             Thread.Sleep(1000);
             driver.FindElement(By.XPath("//input[@name='passwd']")).SendKeys(Pass); //entering passwrod
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
+            driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next----
             driver.FindElement(By.XPath("//input[@type='submit']")).Click(); //clicking Next
             ExIWait("//h2[@class='listTitle']//*[text() = 'My Day']"); //waiting for title
             IWebElement MyDay = driver.FindElement(By.XPath("//h2[@class='listTitle']//*[text() = 'My Day']"));
