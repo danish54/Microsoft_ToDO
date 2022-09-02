@@ -9,20 +9,20 @@ using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Microsoft_ToDO
+namespace Microsoft_ToDO.Test
 {
     [TestClass]
-    public class TODO_Test1 : BaseClass
+    public class TODO_Test1 : Helper.BaseClass
     {
 
         [TestInitialize]
-        
+
         public void Setup()
         {
             base.BrowserLaunch();
         }
 
-        [TestMethod,Priority(1)]
+        [TestMethod, Priority(1)]
         public void loginTest1()
         {
             base.Login();
@@ -40,7 +40,8 @@ namespace Microsoft_ToDO
                 IWebElement Sidemenu = driver.FindElement(By.XPath("//div[@class = 'sidebar']"));
                 Assert.AreEqual(false, Sidemenu.Displayed); //verifying if menu is closed
             }
-            catch {
+            catch
+            {
                 Console.WriteLine("Side Menu Closed");
             }
 
@@ -80,7 +81,7 @@ namespace Microsoft_ToDO
                 tab.Click();
                 Thread.Sleep(3000);
             }
-            
+
         }
 
         [TestCleanup]
