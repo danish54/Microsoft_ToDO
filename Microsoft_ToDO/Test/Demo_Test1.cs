@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Microsoft_ToDO.Test
 {
     [TestClass]
-    public class TODO_Test1 : Helper.BaseClass
+    public class Demo_Test1 : Helper.HelperClass
     {
 
         [TestInitialize]

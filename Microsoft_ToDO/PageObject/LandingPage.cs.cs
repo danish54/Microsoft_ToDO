@@ -9,25 +9,25 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Microsoft_ToDO.PageObject
 {
-    internal class DashboradPage : Helper.BaseClass
+    internal class LandingPage : Helper.HelperClass
     {
 
-
-        public DashboradPage(IWebDriver driver) 
+        public LandingPage(IWebDriver driver)
         {
             this.driver = driver;
         }
-        
+
         private IWebElement GetStarted_btn => driver.FindElement(By.XPath("//a[@id='actionButton']"));
 
         public LoginPage GetStarted()
         {
+            XPWait("//a[@id='actionButton']");
             GetStarted_btn.Click();
             return new LoginPage(driver);
         }
     }
-    }
-    
+}
 
-    
+
+
 
