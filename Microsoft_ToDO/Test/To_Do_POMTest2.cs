@@ -6,16 +6,20 @@ namespace Microsoft_ToDO.Test
     public class To_Do_POMTest2 : Helper.HelperClass
 
     {
+        
+
         [TestInitialize]
         public void Setup()
         {
             base.BrowserLaunch();
+            WriteToFile("Browser Launched Successfully");
         }
 
         [TestCleanup]
         public void Teardown()
         {
-            driver.Quit();
+            CloseBrowser();
+
         }
 
         [TestMethod]
@@ -31,14 +35,9 @@ namespace Microsoft_ToDO.Test
         {
             Boolean logvrfy = base.ToDoPOM_Login();
             Assert.IsTrue(logvrfy);
+            WriteToFile("Login Verified Successfully");
         }
 
-        [TestMethod]
-        public void LoginWhole()
-        {
-            var _getstarted = new LoginPage(driver);
-           
-        }
         [TestMethod]
         public void HmenuCollaps()
         {
@@ -52,6 +51,7 @@ namespace Microsoft_ToDO.Test
             
             Assert.IsFalse(_sidemenuvisibilty);
             Console.WriteLine("HamBurger Menu Closed");
+            WriteToFile("HamBurger Menu Closed");
 
             _hammenu.Click_Hammenu();
             Boolean _sidemenuvisibilty2 = _hammenu.SideMenuVisibility();
@@ -59,13 +59,26 @@ namespace Microsoft_ToDO.Test
 
             Assert.IsTrue(_sidemenuvisibilty2);
             Console.WriteLine("HamBurger Menu Opned again");
+            WriteToFile("HamBurger Menu Opned again");
         }
+
         [TestMethod]
         public void AddTask()
         {
             LoginTest();
             var _addTask = new DashboardPage(driver);
             _addTask.InputTask();
+        }
+
+        [TestMethod]
+        public void CurrentDir()
+        {
+
+            string userDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string filePath = userDir + "\\source\\repos\\Microsoft_ToDO\\Microsoft_ToDO\\OutPut";
+
+            Console.WriteLine("Path {0}", filePath);
+
         }
     }
 }

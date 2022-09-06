@@ -10,10 +10,12 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using WebDriverManager.DriverConfigs.Impl;
 using Microsoft_ToDO.PageObject;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools;
 
 namespace Microsoft_ToDO.Helper
 {
-    public class HelperClass
+    public class HelperClass : LogHelpers
     {
         public IWebDriver driver;
         string Base_url = "https://to-do.microsoft.com";
@@ -23,6 +25,7 @@ namespace Microsoft_ToDO.Helper
         public EdgeOptions options;
         public void BrowserLaunch()
         {
+            
             options = new EdgeOptions();
             //options.AddArgument("disable-notifications");
             //options.AddArgument("disable-sync");
@@ -31,10 +34,17 @@ namespace Microsoft_ToDO.Helper
             //new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
 
             driver = new EdgeDriver(options);
+            //Starting Logs
+            
+
             driver.Manage().Window.Maximize();
             driver.Manage().Cookies.DeleteAllCookies();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
+            //Logs
+            CreateLogFile();
+
+            WriteToFile("Browser Invoked");
             driver.Navigate().GoToUrl(Base_url); //navigating to url
 
         }
@@ -48,7 +58,9 @@ namespace Microsoft_ToDO.Helper
             _loginPassPage.Enter_Pass();
             var _loginverify = _loginPassPage.Click_Sbmt2();
             Boolean logvrfy = _loginverify.VerifyLogin();
+            WriteToFile("Login Complete!");
             return logvrfy;
+            
         }
         public void Login()
         {
@@ -81,6 +93,14 @@ namespace Microsoft_ToDO.Helper
         {
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(Xpath)));
+        }
+
+        public void CloseBrowser()
+        {
+            driver.Quit();  
+            WriteToFile("Browser Closed");
+            //stream.Dispose();
+            stream.Close();
         }
     }
 }

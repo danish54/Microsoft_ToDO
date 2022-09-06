@@ -47,6 +47,7 @@ namespace Microsoft_ToDO.PageObject
             foreach (IWebElement tab in AllTabs)
             {
                 tab.Click();
+                WriteToFile("Navigating to "+ tab);
                 Thread.Sleep(1000);
             }
         }
@@ -73,6 +74,7 @@ namespace Microsoft_ToDO.PageObject
             Thread.Sleep(4000);
             Add_Task_Input.SendKeys("Test1");
             AddTask_btn.Click();
+            WriteToFile("Task Added");
         }
     }
 }
